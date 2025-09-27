@@ -12,6 +12,7 @@
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "expo": "~54.0.10",
+    "expo-camera": "~17.0.8",
     "expo-file-system": "~18.1.11",
     "expo-gl": "~16.0.7",
     "expo-status-bar": "~3.0.8",
