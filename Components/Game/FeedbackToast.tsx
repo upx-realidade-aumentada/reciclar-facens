@@ -24,11 +24,14 @@ export function FeedbackToast({
         Animated.spring(translateY, {
           toValue: 50,
           useNativeDriver: true,
+          friction: 8,
+          tension: 100,
         }),
-        Animated.delay(1000),
         Animated.spring(translateY, {
           toValue: -100,
           useNativeDriver: true,
+          friction: 8,
+          tension: 100,
         }),
       ]).start(() => onComplete());
     }
