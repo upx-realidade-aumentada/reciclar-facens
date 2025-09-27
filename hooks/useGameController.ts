@@ -14,7 +14,7 @@ export const ITEMS = [
     src: Bottle,
     title: "Garrafa de vidro",
     local: "VIDRO",
-    scale: 3,
+    scale: 2.6,
   },
   {
     src: Papers,

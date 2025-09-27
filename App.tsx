@@ -5,11 +5,12 @@ import modelPath from "./assets/models/Papers.glb";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useGameController } from "./hooks/useGameController";
-import { Model } from "./Components/Game/Model";
-import { TopBar } from "./Components/Game/TopBar";
-import { BinsContainer } from "./Components/Game/BinsContainer";
-import { Canva } from "./Components/Game/Canva";
-import { GameOver } from "./Components/Game/GameOver";
+import { Model } from "./components/Game/Model";
+import { TopBar } from "./components/Game/TopBar";
+import { BinsContainer } from "./components/Game/BinsContainer";
+import { Canva } from "./components/Game/Canva";
+import { GameOver } from "./components/Game/GameOver";
+import { FeedbackToast } from "./components/Game/FeedbackToast";
 
 export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -24,11 +25,28 @@ export default function App() {
     BINS,
     ITEMS,
   } = useGameController();
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [lastAttempt, setLastAttempt] = useState({
+    isCorrect: false,
+    selectedBin: "",
+  });
 
   function handleBinPress(bin: string) {
-    if (ITEMS[currentItem].local === bin) {
+    const isCorrect = ITEMS[currentItem].local === bin;
+
+    setLastAttempt({
+      isCorrect,
+      selectedBin: bin,
+    });
+    setShowFeedback(true);
+
+    if (isCorrect) {
       setScore((prev) => prev + 1);
     }
+  }
+
+  function handleCloseFeedback() {
+    setShowFeedback(false);
     setCurrentItem(Math.floor(Math.random() * ITEMS.length));
   }
 
@@ -49,6 +67,15 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <CameraView style={StyleSheet.absoluteFillObject} facing="back" />
+
+      <FeedbackToast
+        visible={showFeedback}
+        isCorrect={lastAttempt.isCorrect}
+        correctBin={ITEMS[currentItem].local}
+        itemName={ITEMS[currentItem].title}
+        onComplete={handleCloseFeedback}
+      />
+
       <TopBar
         currentItemTitle={ITEMS[currentItem].title}
         timeLeft={timeLeft}
