@@ -1,8 +1,8 @@
 import { useGLTF } from "@react-three/drei/native";
 import { useFrame } from "@react-three/fiber/native";
 import { useRef } from "react";
-import { ITEMS } from "../../hooks/useGameController";
 import * as THREE from "three";
+import { items } from "@/data/items";
 
 interface ModelProps {
   itemKey: number;
@@ -12,7 +12,7 @@ interface ModelProps {
 }
 
 export function Model({ itemKey, ...props }: ModelProps) {
-  const gltf = useGLTF(ITEMS[itemKey].src);
+  const gltf = useGLTF(items[itemKey].src);
   const modelRef = useRef<THREE.Group>(null);
 
   useFrame((state, delta) => {

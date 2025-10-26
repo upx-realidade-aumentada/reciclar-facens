@@ -1,21 +1,32 @@
-import { Jaro_400Regular, useFonts } from "@expo-google-fonts/jaro";
-import "../global.css";
+import "@/global.css";
 
-import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 
+import { Text, TouchableOpacity, View } from "react-native";
+
+import { Jaro_400Regular, useFonts } from "@expo-google-fonts/jaro";
+
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useCameraPermissions } from "expo-camera";
+
+import { usePreloadModels } from "@/hooks/usePreloadModels";
+
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
+  const modelsLoaded = usePreloadModels();
+  const [fontsLoaded, error] = useFonts({
     Jaro_400Regular,
   });
 
   useEffect(() => {
-    if (loaded || error) {
+    if ((fontsLoaded && modelsLoaded) || error) {
       SplashScreen.hideAsync();
     }
-  }, [loaded, error]);
+  }, [fontsLoaded, modelsLoaded, error]);
 
-  if (!loaded && !error) {
+  if (!fontsLoaded || !modelsLoaded) {
     return null;
   }
 
