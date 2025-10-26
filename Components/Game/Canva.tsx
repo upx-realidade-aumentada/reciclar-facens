@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber/native";
 import { Suspense } from "react";
-import { Model } from "./Model";
+import { Model } from "./model";
 import { StyleSheet } from "react-native";
 
 interface Props {

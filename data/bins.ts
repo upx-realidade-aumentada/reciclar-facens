@@ -1,8 +1,10 @@
+import { ImageSourcePropType } from "react-native";
+
 export type Local = "PAPEL" | "METAL" | "VIDRO" | "PLÁSTICO";
 
-interface Bin {
+export interface Bin {
   id: Local;
-  image: string;
+  image: ImageSourcePropType;
 }
 
 export const bins: Bin[] = [

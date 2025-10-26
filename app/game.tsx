@@ -5,14 +5,13 @@ import { StyleSheet, View } from "react-native";
 import { CameraView } from "expo-camera";
 import { useAudioPlayer } from "expo-audio";
 
-import { FeedbackToast } from "@/components/Game/FeedbackToast";
-import { TopBar } from "@/components/Game/TopBar";
-import { BinsContainer } from "@/components/Game/BinsContainer";
-import { Canva } from "@/components/Game/Canva";
-import { GameOver } from "@/components/Game/GameOver";
+import { FeedbackToast } from "@/components/game/feedback-toast";
+import { TopBar } from "@/components/game/top-bar";
+import { BinsContainer } from "@/components/game/bins-container";
+import { Canva } from "@/components/game/canva";
+import { GameOver } from "@/components/game/game-over";
 
 import { useGameController } from "@/hooks/useGameController";
-import { usePreloadModels } from "@/hooks/usePreloadModels";
 
 export default function Game() {
   const {
