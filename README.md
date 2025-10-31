@@ -59,6 +59,7 @@ pnpm web        # Inicia o app na Web
 
 - **Versão 1.0** - _Funcionalidades básicas do jogo_ - \_24/09/2025
 - **Versão 1.1** - _Adição de feedback visual e sistema de pontuação_ - _26/09/2025_
+- **Versão 1.2** - _Refatoração de bibliotecas e roteamento_ - _26/10/2025_
 
 ## ✒️ Autores
 
@@ -73,3 +74,10 @@ pnpm web        # Inicia o app na Web
 - Timer de jogo
 - Lixeiras interativas
 - Game over com pontuação final
+
+## TODO
+
+- [ ] Menu de pausa com opções: Continuar / Reiniciar / Sair.
+- [ ] Sistema de níveis de dificuldade
+- [ ] Informações Educacionais
+- [ ] Ranking de Jogadores
