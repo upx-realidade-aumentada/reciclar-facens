@@ -8,7 +8,7 @@ import { useAudioPlayer } from "expo-audio";
 import { FeedbackToast } from "@/components/game/feedback-toast";
 import { TopBar } from "@/components/game/top-bar";
 import { BinsContainer } from "@/components/game/bins-container";
-import { Canva } from "@/components/game/canva";
+import { Canva } from "@/components/game/canvas";
 import { GameOver } from "@/components/game/game-over";
 
 import { useGameController } from "@/hooks/useGameController";

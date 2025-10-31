@@ -15,6 +15,7 @@ export function Model({ itemKey, ...props }: ModelProps) {
   const gltf = useGLTF(items[itemKey].src);
   const modelRef = useRef<THREE.Group>(null);
 
+  
   useFrame((state, delta) => {
     if (modelRef.current) {
       modelRef.current.rotation.y += delta * 0.5;

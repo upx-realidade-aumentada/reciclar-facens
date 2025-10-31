@@ -1,6 +1,6 @@
 import { Canvas } from "@react-three/fiber/native";
 import { Suspense } from "react";
-import { Model } from "./model";
+import { Model } from "./models";
 import { StyleSheet } from "react-native";
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export function Canva({ currentItem, scale }: Props) {
+  
   return (
     <Canvas style={styles.container}>
       <ambientLight intensity={7} />
