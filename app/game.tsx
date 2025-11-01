@@ -12,6 +12,7 @@ import { Canva } from "@/components/game/canvas";
 import { GameOver } from "@/components/game/game-over";
 
 import { getRandom, useGameController } from "@/hooks/useGameController";
+import { Item } from "@/data/items";
 
 export default function Game() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -27,6 +28,7 @@ export default function Game() {
     items,
   } = useGameController();
   const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackItem, setFeedbackItem] = useState<Item>(items[0]);
   const [lastAttempt, setLastAttempt] = useState({
     isCorrect: false,
     selectedBin: "",
@@ -41,6 +43,7 @@ export default function Game() {
 
   function handleBinPress(bin: string) {
     const isCorrect = items[currentItem].local === bin;
+    setFeedbackItem(items[currentItem])
 
     setLastAttempt({
       isCorrect,
@@ -89,8 +92,8 @@ export default function Game() {
       <FeedbackToast
         visible={showFeedback}
         isCorrect={lastAttempt.isCorrect}
-        correctBin={items[currentItem].local}
-        itemName={items[currentItem].title}
+        correctBin={feedbackItem.local}
+        itemName={feedbackItem.title}
         onComplete={handleCloseFeedback}
       />
 
