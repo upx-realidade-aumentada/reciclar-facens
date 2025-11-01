@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { CameraView } from "expo-camera";
+import { CameraView, useCameraPermissions } from "expo-camera";
 import { useAudioPlayer } from "expo-audio";
 
 import { FeedbackToast } from "@/components/game/feedback-toast";
@@ -14,6 +14,7 @@ import { GameOver } from "@/components/game/game-over";
 import { useGameController } from "@/hooks/useGameController";
 
 export default function Game() {
+  const [permission, requestPermission] = useCameraPermissions();
   const {
     score,
     timeLeft,
@@ -63,6 +64,23 @@ export default function Game() {
     setCurrentItem(Math.floor(Math.random() * items.length));
   }
 
+  if (!permission) return <View />;
+
+  if (!permission.granted) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text style={{ marginBottom: 10, textAlign: "center" }}>
+          Precisamos da permissão para acessar a câmera
+        </Text>
+        <TouchableOpacity
+          onPress={requestPermission}
+          className="bg-[#e74c3c] p-3 rounded-xl mt-20"
+        >
+          <Text style={{ color: "#fff" }}>Conceder permissão</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View className="flex-1">
       <CameraView style={StyleSheet.absoluteFillObject} facing="back" />
