@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { items } from "@/data/items";
 import { bins } from "@/data/bins";
 
-function getRandom() {
+export function getRandom() {
   return Math.floor(Math.random() * items.length);
 }
 

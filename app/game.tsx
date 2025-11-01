@@ -11,7 +11,7 @@ import { BinsContainer } from "@/components/game/bins-container";
 import { Canva } from "@/components/game/canvas";
 import { GameOver } from "@/components/game/game-over";
 
-import { useGameController } from "@/hooks/useGameController";
+import { getRandom, useGameController } from "@/hooks/useGameController";
 
 export default function Game() {
   const [permission, requestPermission] = useCameraPermissions();
@@ -46,6 +46,8 @@ export default function Game() {
       isCorrect,
       selectedBin: bin,
     });
+
+    setCurrentItem(getRandom());
     setShowFeedback(true);
 
     if (isCorrect) {
@@ -61,7 +63,6 @@ export default function Game() {
 
   function handleCloseFeedback() {
     setShowFeedback(false);
-    setCurrentItem(Math.floor(Math.random() * items.length));
   }
 
   if (!permission) return <View />;
