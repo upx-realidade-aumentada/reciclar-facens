@@ -27,7 +27,8 @@ export default function Game() {
     bins,
     items,
   } = useGameController();
-  const [showFeedback, setShowFeedback] = useState(false);
+
+  const [feedbackKey, setFeedbackKey] = useState(-1);
   const [feedbackItem, setFeedbackItem] = useState<Item>(items[0]);
   const [lastAttempt, setLastAttempt] = useState({
     isCorrect: false,
@@ -43,7 +44,7 @@ export default function Game() {
 
   function handleBinPress(bin: string) {
     const isCorrect = items[currentItem].local === bin;
-    setFeedbackItem(items[currentItem])
+    setFeedbackItem(items[currentItem]);
 
     setLastAttempt({
       isCorrect,
@@ -51,7 +52,7 @@ export default function Game() {
     });
 
     setCurrentItem(getRandom());
-    setShowFeedback(true);
+    setFeedbackKey((k) => k + 1);
 
     if (isCorrect) {
       playerRightAnswer.seekTo(0);
@@ -64,9 +65,7 @@ export default function Game() {
     playerWrongAnswer.play();
   }
 
-  function handleCloseFeedback() {
-    setShowFeedback(false);
-  }
+  function handleCloseFeedback() {}
 
   if (!permission) return <View />;
 
@@ -90,7 +89,7 @@ export default function Game() {
       <CameraView style={StyleSheet.absoluteFillObject} facing="back" />
 
       <FeedbackToast
-        visible={showFeedback}
+        visibleKey={feedbackKey}
         isCorrect={lastAttempt.isCorrect}
         correctBin={feedbackItem.local}
         itemName={feedbackItem.title}

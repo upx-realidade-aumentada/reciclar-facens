@@ -1,11 +1,11 @@
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, Text } from "react-native";
 import { useEffect, useRef } from "react";
 
 interface FeedbackToastProps {
   isCorrect: boolean;
   itemName: string;
   correctBin: string;
-  visible: boolean;
+  visibleKey: number;
   onComplete: () => void;
 }
 
@@ -13,32 +13,65 @@ export function FeedbackToast({
   isCorrect,
   itemName,
   correctBin,
-  visible,
+  visibleKey,
   onComplete,
 }: FeedbackToastProps) {
   const translateY = useRef(new Animated.Value(-100)).current;
+  const currentAnimRef = useRef<Animated.CompositeAnimation | null>(null);
+  const runTokenRef = useRef(0);
 
   useEffect(() => {
-    if (visible) {
-      Animated.sequence([
-        Animated.spring(translateY, {
-          toValue: 50,
-          useNativeDriver: true,
-          friction: 8,
-          tension: 100,
-        }),
-        Animated.spring(translateY, {
-          toValue: -100,
-          useNativeDriver: true,
-          friction: 8,
-          tension: 100,
-        }),
-      ]).start(() => onComplete());
+    if (visibleKey == null || visibleKey < 0) return;
+
+    runTokenRef.current += 1;
+    const thisRun = runTokenRef.current;
+
+    if (currentAnimRef.current) {
+      try {
+        currentAnimRef.current.stop();
+      } catch (e) {}
+      currentAnimRef.current = null;
     }
-  }, [visible]);
+
+    translateY.setValue(1000);
+    const seq = Animated.sequence([
+      Animated.spring(translateY, {
+        toValue: 800,
+        useNativeDriver: true,
+        friction: 8,
+        tension: 100,
+      }),
+      Animated.delay(700),
+      Animated.spring(translateY, {
+        toValue: 1000,
+        useNativeDriver: true,
+        friction: 8,
+        tension: 100,
+      }),
+    ]);
+
+    currentAnimRef.current = seq;
+
+    seq.start(() => {
+      if (runTokenRef.current === thisRun) {
+        currentAnimRef.current = null;
+        onComplete();
+      }
+    });
+
+    return () => {
+      if (currentAnimRef.current) {
+        try {
+          currentAnimRef.current.stop();
+        } catch (e) {}
+        currentAnimRef.current = null;
+      }
+    };
+  }, [visibleKey]);
 
   return (
     <Animated.View
+      pointerEvents="none"
       style={[
         styles.container,
         {
