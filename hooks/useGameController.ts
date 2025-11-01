@@ -9,7 +9,7 @@ function getRandom() {
 
 export function useGameController() {
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [currentItem, setCurrentItem] = useState(getRandom());
 
