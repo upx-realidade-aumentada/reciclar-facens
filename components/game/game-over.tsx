@@ -1,18 +1,45 @@
+import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { EducationalModal } from "@/components/game/educational-modal";
+
+interface LessonData {
+  title: string;
+  correctBin: string;
+  description?: string;
+}
 
 interface GameOverProps {
   score: number;
   onRestart: () => void;
+  lessonData?: LessonData;
 }
 
-export function GameOver({ score, onRestart }: GameOverProps) {
+export function GameOver({ score, onRestart, lessonData }: GameOverProps) {
+  const [showLesson, setShowLesson] = useState(false);
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameOver}>Fim de Jogo!</Text>
       <Text style={styles.text}>Pontuação Final: {score}</Text>
+
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "#2b65ff" }]}
+        onPress={() => setShowLesson(true)}
+      >
+        <Text style={styles.buttonText}>Aprender</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={onRestart}>
         <Text style={styles.buttonText}>Jogar Novamente</Text>
       </TouchableOpacity>
+
+      {lessonData && (
+        <EducationalModal
+          visible={showLesson}
+          onClose={() => setShowLesson(false)}
+          lesson={lessonData}
+        />
+      )}
     </View>
   );
 }

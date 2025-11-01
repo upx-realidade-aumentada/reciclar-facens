@@ -6,11 +6,15 @@ import { ImageBackground } from "expo-image";
 import { router } from "expo-router";
 
 import { Button } from "@/components/button";
+import { useGame } from "@/context/GameContext";
 
 const image = require("@/assets/images/home-background.png");
 
 export default function Home() {
+  const { restartGame } = useGame();
+
   function handlePlay() {
+    restartGame();
     router.push("/game");
   }
 

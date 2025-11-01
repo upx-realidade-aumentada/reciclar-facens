@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { items } from "@/data/items";
 import { bins } from "@/data/bins";
+import { useAudioPlayer } from "expo-audio";
 
 export function getRandom() {
   return Math.floor(Math.random() * items.length);
@@ -13,6 +14,27 @@ export function useGameController() {
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [currentItem, setCurrentItem] = useState(getRandom());
+  const [isMusicOn, setIsMusicOn] = useState(true);
+
+  // background music player
+  const bgPlayer = useAudioPlayer(
+    require("@/assets/audios/background-music.mp3")
+  );
+
+  useEffect(() => {
+    // when music preference changes, play or pause the bg music
+    try {
+      if (isMusicOn) {
+        bgPlayer.seekTo(0);
+        bgPlayer.play();
+      } else {
+        bgPlayer.pause();
+      }
+    } catch (e) {
+      // ignore audio errors to avoid crashing the hook
+      // console.warn("Background music error", e);
+    }
+  }, [isMusicOn]);
 
   useEffect(() => {
     if (gameOver || isPaused) return;
@@ -27,7 +49,7 @@ export function useGameController() {
 
   function restartGame() {
     setScore(0);
-    setTimeLeft(600);
+    setTimeLeft(60);
     setGameOver(false);
     setIsPaused(false);
     setCurrentItem(getRandom());
@@ -35,6 +57,25 @@ export function useGameController() {
 
   function pause() {
     setIsPaused((prev) => !prev);
+  }
+
+  function toggleMusic() {
+    setIsMusicOn((prev) => !prev);
+  }
+
+  function playMusic() {
+    try {
+      bgPlayer.seekTo(0);
+      bgPlayer.play();
+      setIsMusicOn(true);
+    } catch {}
+  }
+
+  function stopMusic() {
+    try {
+      bgPlayer.pause();
+      setIsMusicOn(false);
+    } catch {}
   }
 
   return {
@@ -49,5 +90,9 @@ export function useGameController() {
     isPaused,
     items,
     bins,
+    isMusicOn,
+    toggleMusic,
+    playMusic,
+    stopMusic,
   };
 }

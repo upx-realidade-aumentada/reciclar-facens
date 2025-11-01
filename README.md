@@ -77,7 +77,7 @@ pnpm web        # Inicia o app na Web
 
 ## TODO
 
-- [ ] Menu de pausa com opções: Continuar / Reiniciar / Sair.
+- [ x ] Menu de pausa com opções: Continuar / Reiniciar / Sair.
 - [ ] Sistema de níveis de dificuldade
 - [ ] Informações Educacionais
 - [ ] Ranking de Jogadores

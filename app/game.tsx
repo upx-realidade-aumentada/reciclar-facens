@@ -100,7 +100,17 @@ export default function Game() {
       <BinsContainer bins={bins} onBinPress={handleBinPress} />
       <Canva currentItem={currentItem} scale={items[currentItem].scale} />
 
-      {gameOver && <GameOver onRestart={restartGame} score={score} />}
+      {gameOver && (
+        <GameOver
+          onRestart={restartGame}
+          score={score}
+          lessonData={{
+            title: feedbackItem.title,
+            correctBin: feedbackItem.local,
+            description: `A ${feedbackItem.title} deve ser descartada no contêiner ${feedbackItem.local}. Quando possível, remova restos e descarte no local correto para facilitar a reciclagem.`,
+          }}
+        />
+      )}
     </View>
   );
 }
