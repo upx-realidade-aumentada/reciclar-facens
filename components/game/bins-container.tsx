@@ -9,7 +9,7 @@ interface Props {
 
 export function BinsContainer({ bins, onBinPress }: Props) {
   return (
-    <View className="absolute top-32 left-0 right-0 flex-row justify-around px-5">
+    <View className="flex-row justify-around px-5">
       {bins.map((bin) => (
         <TouchableOpacity
           key={bin.id}

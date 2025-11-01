@@ -9,7 +9,6 @@ interface Props {
 }
 
 export function Canva({ currentItem, scale }: Props) {
-  
   return (
     <Canvas style={styles.container}>
       <ambientLight intensity={7} />

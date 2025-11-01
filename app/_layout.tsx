@@ -2,15 +2,13 @@ import "@/global.css";
 
 import { useEffect } from "react";
 
-import { Text, TouchableOpacity, View } from "react-native";
-
 import { Jaro_400Regular, useFonts } from "@expo-google-fonts/jaro";
 
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useCameraPermissions } from "expo-camera";
 
 import { usePreloadModels } from "@/hooks/usePreloadModels";
+import { GameProvider } from "@/context/GameContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,5 +28,15 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <GameProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="pause"
+          options={{ presentation: "containedTransparentModal" }}
+        />
+      </Stack>
+    </GameProvider>
+  );
 }

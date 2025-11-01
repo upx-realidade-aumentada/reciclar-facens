@@ -1,32 +1,31 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useGame } from "@/context/GameContext";
+import { Link } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-interface Props {
-  score: number;
-  timeLeft: number;
-  currentItemTitle: string;
-}
+export function TopBar() {
+  const { timeLeft, score, items, currentItem, pause } = useGame();
 
-export function TopBar({ score, timeLeft, currentItemTitle }: Props) {
   return (
-    <View style={styles.container}>
+    <View className="flex items-center gap-4 flex-row justify-center px-5 mt-10 mb-5">
       <View style={{ flex: 1, flexDirection: "column" }}>
-        <Text style={styles.text}>Pontuação: {score}</Text>
-        <Text style={styles.titleText}>{currentItemTitle}</Text>
+        <Text className="text-2xl font-Jaro_400Regular text-white">
+          Pontuação: {score}
+        </Text>
+        <Text
+          className="text-7xl font-Jaro_400Regular"
+          style={{ color: "yellow" }}
+        >
+          {items[currentItem].title}
+        </Text>
       </View>
-      <Text style={styles.text}>🕛 {timeLeft}s</Text>
+      <Text className="text-2xl font-Jaro_400Regular text-white">
+        🕛 {timeLeft}s
+      </Text>
+      <Link href="/pause" asChild>
+        <TouchableOpacity className="p-2 rounded-xl" onPress={pause}>
+          <Text className="text-2xl text-white">⏸️</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 20,
-    marginTop: 40,
-    marginBottom: 20,
-  },
-  titleText: { fontSize: 32, fontWeight: "bold", color: "white" },
-  text: { fontSize: 20, fontWeight: "bold", color: "yellow" },
-});

@@ -11,14 +11,14 @@ import { BinsContainer } from "@/components/game/bins-container";
 import { Canva } from "@/components/game/canvas";
 import { GameOver } from "@/components/game/game-over";
 
-import { getRandom, useGameController } from "@/hooks/useGameController";
+import { getRandom } from "@/hooks/useGameController";
+import { useGame } from "@/context/GameContext";
 import { Item } from "@/data/items";
 
 export default function Game() {
   const [permission, requestPermission] = useCameraPermissions();
   const {
     score,
-    timeLeft,
     gameOver,
     setScore,
     restartGame,
@@ -26,7 +26,7 @@ export default function Game() {
     setCurrentItem,
     bins,
     items,
-  } = useGameController();
+  } = useGame();
 
   const [feedbackKey, setFeedbackKey] = useState(-1);
   const [feedbackItem, setFeedbackItem] = useState<Item>(items[0]);
@@ -96,11 +96,7 @@ export default function Game() {
         onComplete={handleCloseFeedback}
       />
 
-      <TopBar
-        currentItemTitle={items[currentItem].title}
-        timeLeft={timeLeft}
-        score={score}
-      />
+      <TopBar />
       <BinsContainer bins={bins} onBinPress={handleBinPress} />
       <Canva currentItem={currentItem} scale={items[currentItem].scale} />
 

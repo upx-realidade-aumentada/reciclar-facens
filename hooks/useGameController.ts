@@ -11,10 +11,11 @@ export function useGameController() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameOver, setGameOver] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [currentItem, setCurrentItem] = useState(getRandom());
 
   useEffect(() => {
-    if (gameOver) return;
+    if (gameOver || isPaused) return;
     if (timeLeft <= 0) {
       setGameOver(true);
       return;
@@ -22,13 +23,18 @@ export function useGameController() {
 
     const timer = setTimeout(() => setTimeLeft((s) => s - 1), 1000);
     return () => clearTimeout(timer);
-  }, [timeLeft, gameOver]);
+  }, [timeLeft, gameOver, isPaused]);
 
   function restartGame() {
     setScore(0);
-    setTimeLeft(60);
+    setTimeLeft(600);
     setGameOver(false);
+    setIsPaused(false);
     setCurrentItem(getRandom());
+  }
+
+  function pause() {
+    setIsPaused((prev) => !prev);
   }
 
   return {
@@ -38,7 +44,9 @@ export function useGameController() {
     restartGame,
     setScore,
     timeLeft,
+    pause,
     gameOver,
+    isPaused,
     items,
     bins,
   };

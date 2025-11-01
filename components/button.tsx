@@ -27,6 +27,38 @@ const themes = {
     shadowBottom: "#C4BAFF",
     textShadow: "#5442A0",
   },
+  blue: {
+    light: "#6EC9FF",
+    dark: "#2B8EDB",
+    stroke: "#145B99",
+    shadowTop: "#3E9ED6",
+    shadowBottom: "#A7E0FF",
+    textShadow: "#145B99",
+  },
+  red: {
+    light: "#FF7A7A",
+    dark: "#E24343",
+    stroke: "#8C1E1E",
+    shadowTop: "#C13636",
+    shadowBottom: "#FFB1B1",
+    textShadow: "#8C1E1E",
+  },
+  orange: {
+    light: "#FFB26E",
+    dark: "#E57C1F",
+    stroke: "#8C480E",
+    shadowTop: "#CC6B1B",
+    shadowBottom: "#FFD2A7",
+    textShadow: "#8C480E",
+  },
+  teal: {
+    light: "#6EE8D0",
+    dark: "#27B89D",
+    stroke: "#106455",
+    shadowTop: "#33BFA3",
+    shadowBottom: "#A9F2E2",
+    textShadow: "#106455",
+  },
 };
 
 interface ButtonProps {
